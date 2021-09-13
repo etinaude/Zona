@@ -1,3 +1,4 @@
 dnspython
 flask
 pymongo
+python-dotenv
