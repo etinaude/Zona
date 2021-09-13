@@ -1,0 +1,18 @@
+schema {
+  query: Entries
+}
+
+type Entries {
+  entries: [Entry]
+}
+
+type Entry {
+  time: String
+  rooms: [Room]
+}
+
+type Room {
+  id: String
+  name: String
+  count: Int
+}

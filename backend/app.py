@@ -1,8 +1,13 @@
-from flask import Flask, render_template, request, make_response
+from flask import Flask, render_template, request, make_response, jsonify
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
+from pymongo import MongoClient
+from random import randint
+import time
 
-# flask app setup
+# databse init
+client = MongoClient(port=27017)
+db=client.bigSibling.bigSibling
 app = Flask(__name__)
 
 # google sheets setup
@@ -11,18 +16,37 @@ scope = [
     'https://www.googleapis.com/auth/drive'
 ]
 credtails = ServiceAccountCredentials.from_json_keyfile_name("creds.json", scope)
-client = gspread.authorize(credtails)
-sheet = client.open("totally good database")
-members = sheet.worksheet("Sheet1")
+# client = gspread.authorize(credtails)
+# sheet = client.open("totally good database")
+# entries = sheet.worksheet("Sheet1")
 
-print(members.get_all_records())
+# print(entries.get_all_records())
 
-# @app.route('/')
-# def index():
-#     if request.authorization and request.authorization.username == 'unleashspace' and request.authorization.password == 'UnleashSpace2017':
-#         return render_template('index.html')
-#     return make_response('Could not verify!', 401, {'WWW-Authenticate': 'Basic realm="Login Required'})
 
+@app.route('/')
+def index():
+    pass
+
+
+@app.route('/entry', methods = ['POST'])
+def entry():
+    print(request.json)
+    result = db.insert_one(request.json)
+
+    print(result)
+    return "200"
+
+@app.route('/entries/all', methods = ['GET'])
+def all():
+    result = list(db.find({}))
+    return str(result)
+
+@app.route('/entries/time', methods = ['GET'])
+def time():
+    start = (request.args.to_dict()["start"])
+    end = (request.args.to_dict()["end"])
+    result = list(db.find({"time": {"$gt": start, "$lt":end}}))
+    return str(result)
 
 if __name__ == '__main__':
     app.debug = True
