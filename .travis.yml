@@ -6,4 +6,4 @@ install:
 script:
   - echo $ENV | base64 -di > backend/.env
   - cd backend
-  - python app.py
+  - pytest
