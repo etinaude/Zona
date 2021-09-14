@@ -1,21 +1,26 @@
 from flask import Flask, render_template, request, make_response, jsonify
-import gspread
-from oauth2client.service_account import ServiceAccountCredentials
+# import gspread
+# from oauth2client.service_account import ServiceAccountCredentials
 from pymongo import MongoClient
 from random import randint
+from dotenv import dotenv_values
+
 import time
 
+
+env = dotenv_values(".env")
+
 # databse init
-client = MongoClient(port=27017)
-db=client.bigSibling.bigSibling
+client = MongoClient("mongodb+srv://"+env["mongoUsr"]+":"+env["mongoPw"]+"@cluster0.4rzpy.mongodb.net/myFirstDatabase?retryWrites=true&w=majority")
+db=client.zona.entries
 app = Flask(__name__)
 
 # google sheets setup
-scope = [
-    'https://www.googleapis.com/auth/spreadsheets',
-    'https://www.googleapis.com/auth/drive'
-]
-credtails = ServiceAccountCredentials.from_json_keyfile_name("creds.json", scope)
+# scope = [
+    # 'https://www.googleapis.com/auth/spreadsheets',
+    # 'https://www.googleapis.com/auth/drive'
+# ]
+# credtails = ServiceAccountCredentials.from_json_keyfile_name("creds.json", scope)
 # client = gspread.authorize(credtails)
 # sheet = client.open("totally good database")
 # entries = sheet.worksheet("Sheet1")
