@@ -4,7 +4,6 @@ import React from 'react';
 
 
 export default class Table extends React.Component {
-
     constructor(props) {
         super(props);
         this.state = {
@@ -45,7 +44,7 @@ export default class Table extends React.Component {
                     height: '500px'
                 }}
             >
-                <Chart data={this.prop.data} axes={this.axes} />
+                <Chart data={this.state.data} axes={this.axes} />
             </div>
         )
     }
