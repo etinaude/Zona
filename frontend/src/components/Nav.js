@@ -1,18 +1,34 @@
 import React from 'react';
-
+import './Nav.css';
 
 export default class Nav extends React.Component {
+    tabs = ["About", "Locations", "Contact", "Privacy"]
+    activeTab = "About"
+
     constructor(props) {
         super(props);
         this.state = {
-            hover: false,
+            buttons: this.changeButton()
         };
     }
 
-    toggleHover = () => {
-        console.log(this.state.hover)
-        this.setState({ hover: !this.state.hover })
+
+    switchTab = (tab) => {
+        this.props.changeTab(tab)
+
+        this.activeTab = tab
+        this.setState({
+            buttons: this.changeButton(),
+        });
     }
+
+    changeButton() {
+        var buttons = this.tabs.map((item, index) => {
+            return <NavButton key={index} name={item} onActivate={this.switchTab} active={item === this.activeTab}></NavButton>
+        })
+        return buttons
+    }
+
 
     render() {
         const navMenu = {
@@ -25,12 +41,11 @@ export default class Nav extends React.Component {
             display: "flex",
         }
 
+
+
         return (
             <nav style={navMenu}>
-                <NavButton name="About"></NavButton>
-                <NavButton name="Locations"></NavButton>
-                <NavButton name="Contact"></NavButton>
-                <NavButton name="Privacy"></NavButton>
+                {this.state.buttons}
             </nav>
         )
     }
@@ -40,7 +55,7 @@ class NavButton extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            hover: false,
+            active: this.props.active,
         };
     }
 
@@ -48,27 +63,15 @@ class NavButton extends React.Component {
         this.setState({ hover: !this.state.hover })
     }
 
+    navigate = () => {
+        this.props.onActivate(this.props.name)
+    }
+
     render() {
-        const navButton = {
-            background: "#222",
-            color: "#fff",
-            padding: "8px 25px",
-            marginLeft: "20px",
-            marginTop: "5px",
-            alignSelf: "center",
-            cursor: "pointer"
-        }
-
-        if (this.state.hover) {
-            navButton.backgroundColor = '#666'
-        } else {
-            navButton.backgroundColor = '#333'
-
-        }
 
 
         return (
-            <div style={navButton} onMouseEnter={this.toggleHover} onMouseLeave={this.toggleHover} >{this.props.name}</div>
+            <div className={"navButton " + this.props.active} onClick={this.navigate} onMouseEnter={this.toggleHover} onMouseLeave={this.toggleHover} >{this.props.name}</div>
         )
     }
 }

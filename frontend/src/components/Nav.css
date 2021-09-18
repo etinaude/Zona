@@ -1,0 +1,26 @@
+.navButton {
+  /* background: #222; */
+  color: #fff;
+  padding: 8px 25px;
+  margin-left: 20px;
+  margin-top: 5px;
+  align-self: center;
+  cursor: pointer;
+  transition: ease 0.8s;
+}
+
+.navButton.false {
+  box-shadow: inset 0px -10px #666;
+}
+
+.navButton.true {
+  background-color: #888;
+}
+.navButton.true:hover {
+  background-color: #666;
+}
+
+.navButton.false:hover {
+  /* background-color: #666; */
+  box-shadow: inset 0px -50px #666;
+}
