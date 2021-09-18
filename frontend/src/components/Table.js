@@ -68,30 +68,3 @@ export default class Table extends React.Component {
         return data
     }
 }
-
-// import React from "react";
-
-// export default function Table() {
-//     const [email, setEmail] = React.useState("");
-//     React.useEffect(() => {
-//         var headers =
-//         {
-//             method: 'GET',
-//             mode: 'no-cors',
-//             cache: 'default'
-//         };
-//         const fetchUserEmail = async () => {
-//             const response = await fetch("https://back.etinaude.dev/zona/entries/all", headers);
-//             const { email } = await response;
-//             setEmail(email);
-//         };
-//         fetchUserEmail();
-//     }, []);
-
-//     return (
-//         <div>
-//             <h1>A user</h1>
-//             <p>{email}</p>
-//         </div>
-//     );
-// };
