@@ -1,4 +1,4 @@
-import './App.css';
+import './App.scss';
 import React, { useState } from 'react';
 import Table from './components/Table';
 import Graph from './components/Chart';
@@ -6,6 +6,8 @@ import Nav from './components/Nav';
 import About from "./pages/About"
 import Locations from "./pages/Locations"
 import Welcome from "./pages/Welcome"
+import Live from "./components/Live"
+
 
 
 
@@ -38,7 +40,9 @@ function App() {
           <div className="no-active">Data</div>
 
         </div>
-        <div className="room-area"></div>
+        <div className="room-area">
+          <Live />
+        </div>
         <div className="room-tab">
           <div className="active"></div>
           <div className="no-active"></div>
