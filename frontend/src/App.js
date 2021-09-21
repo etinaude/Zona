@@ -32,9 +32,24 @@ function App() {
     <div className="app">
       <div className="background"></div>
       <Welcome />
-      <Nav changeTab={changeTab} ></Nav>
+      <div className="template">
+        <div className="tabs">
+          <div className="active">Live</div>
+          <div className="no-active">Data</div>
+
+        </div>
+        <div className="room-area"></div>
+        <div className="room-tab">
+          <div className="active"></div>
+          <div className="no-active"></div>
+          <div className="no-active"></div>
+          <div className="no-active"></div>
+        </div>
+
+      </div>
+      {/* <Nav changeTab={changeTab} ></Nav> */}
       {/* <Locations></Locations> */}
-      {tabElement}
+      {/* {tabElement} */}
       {/* <About></About> */}
       {/* <Table></Table> */}
       {/* <Graph></Graph> */}
