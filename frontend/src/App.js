@@ -5,6 +5,8 @@ import Graph from './components/Chart';
 import Nav from './components/Nav';
 import About from "./pages/About"
 import Locations from "./pages/Locations"
+import Welcome from "./pages/Welcome"
+
 
 
 
@@ -27,7 +29,9 @@ function App() {
 
 
   return (
-    <div>
+    <div className="app">
+      <div className="background"></div>
+      <Welcome />
       <Nav changeTab={changeTab} ></Nav>
       {/* <Locations></Locations> */}
       {tabElement}
