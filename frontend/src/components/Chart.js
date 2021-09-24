@@ -15,7 +15,6 @@ export default class Table extends React.Component {
         const getData = async () => {
             const response = await getAllData();
             var data = await this.formatData(await response.json());
-            console.log(data)
             this.setState({
                 data: data
             });
@@ -53,12 +52,10 @@ export default class Table extends React.Component {
 
         let data = [[new Date(), 0]]
         for (let datum of rawData) {
-            console.log(new Date(datum.time))
             data.push([datum.time, datum.rooms[0].count])
         }
         data = data.sort((a, b) => b.time - a.time)
 
-        console.log(data)
         return [{
             label: 'series', data: data
         }]

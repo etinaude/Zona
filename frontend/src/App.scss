@@ -25,14 +25,14 @@
     transform: translate(0, -50%);
     display: flex;
     flex-direction: column;
-  }
 
-  .room-tab > div {
-    width: 20px;
-    height: 20px;
-    background-color: #fff;
-    border-radius: 50%;
-    margin-bottom: 50px;
+    div {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      margin-bottom: 50px;
+      cursor: pointer;
+    }
   }
 
   .view-tabs {
@@ -51,26 +51,6 @@
       cursor: pointer;
       transition: 0.2s ease;
     }
-  }
-
-  .no-active {
-    background-color: #35916d55;
-    color: #fff;
-  }
-
-  .no-active:hover {
-    background-color: #44be8f55;
-  }
-
-  .active {
-    background-color: #fff9;
-    color: #339670;
-    cursor: pointer;
-    transition: 0.2s ease;
-  }
-
-  .active:hover {
-    background-color: rgba(193, 255, 206, 0.6);
   }
 }
 
@@ -187,4 +167,24 @@
       font-size: 20px;
     }
   }
+}
+
+.no-active {
+  background-color: #35916d55;
+  color: #fff;
+}
+
+.no-active:hover {
+  background-color: #44be8f55;
+}
+
+.active {
+  background-color: #fff9;
+  color: #339670;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.active:hover {
+  background-color: rgba(193, 255, 206, 0.6);
 }

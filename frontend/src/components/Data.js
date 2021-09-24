@@ -6,9 +6,11 @@ function Data(props) {
     var changeTab = () => {
         props.changeTabInput(props.title);
     }
+
+
     return (
         <div className="center-container">
-            <Table />
+            <Table roomNumber={props.roomNumber} timeScale={props.timeScale} />
         </div>
     );
 }

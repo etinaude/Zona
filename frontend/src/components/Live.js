@@ -13,7 +13,7 @@ function Live(props) {
             </div>
             <div className="live-count-container">
                 <div className="live-count-number">
-                    5
+                    {props.roomNumber}
                 </div>
                 <div className="live-count-text">People In the room</div>
             </div>

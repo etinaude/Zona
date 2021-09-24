@@ -17,27 +17,63 @@ import Data from "./components/Data"
 
 
 function App() {
-  var changeTab = (newTab) => {
+  var roomNumber = 0
+  var tab = "Live"
 
+
+
+  var changeTab = (newTab) => {
     switch (newTab) {
       case "Live":
-        switchView(<Live />);
+        tab = "Live"
+        switchView(<Live roomNumber={roomNumber} />);
 
         switchViewTab(<><ViewTab active="active" title="Live" changeTabInput={changeTab} />
           <ViewTab active="no-active" title="Data" changeTabInput={changeTab} />
         </>)
         break
       case "Data":
+        tab = "Data"
+
         switchViewTab(<><ViewTab active="no-active" title="Live" changeTabInput={changeTab} />
           <ViewTab active="active" title="Data" changeTabInput={changeTab} />
         </>)
-        switchView(<Data />);
+        switchView(<Data roomNumber={roomNumber} />);
         break
       default:
     }
   }
 
-  var [viewElement, switchView] = useState(<Live />);
+
+
+  var changeRoom = (number) => {
+    roomNumber = number;
+    if (tab === "Live") {
+      switchView(<Live roomNumber={roomNumber} />);
+    } else {
+      switchView(<Data roomNumber={roomNumber} />);
+    }
+
+
+    switchRooms(
+      <>
+        <div onClick={() => changeRoom(0)} className={number === 0 ? "active" : "no-active"}></div>
+        <div onClick={() => changeRoom(1)} className={number === 1 ? "active" : "no-active"}></div>
+        <div onClick={() => changeRoom(2)} className={number === 2 ? "active" : "no-active"}></div>
+        <div onClick={() => changeRoom(3)} className={number === 3 ? "active" : "no-active"}></div>
+      </>)
+  }
+
+
+
+  var [rooms, switchRooms] = useState(
+    <>
+      <div onClick={() => changeRoom(0)} className="active"></div>
+      <div onClick={() => changeRoom(1)} className="no-active"></div>
+      <div onClick={() => changeRoom(2)} className="no-active"></div>
+      <div onClick={() => changeRoom(3)} className="no-active"></div>
+    </>);
+  var [viewElement, switchView] = useState(<Live roomNumber="6" />);
   var [viewTab, switchViewTab] = useState(
     <><ViewTab active="active" title="Live" changeTabInput={changeTab} />
       <ViewTab active="no-active" title="Data" changeTabInput={changeTab} />
@@ -47,7 +83,7 @@ function App() {
   return (
     <div className="app">
       <div className="background"></div>
-      <Welcome />
+      {/* <Welcome /> */}
       <div className="template">
         <div className="view-tabs">
           {viewTab}
@@ -56,10 +92,7 @@ function App() {
           {viewElement}
         </div>
         <div className="room-tab">
-          <div className="active"></div>
-          <div className="no-active"></div>
-          <div className="no-active"></div>
-          <div className="no-active"></div>
+          {rooms}
         </div>
 
       </div>
