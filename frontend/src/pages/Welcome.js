@@ -10,7 +10,6 @@ function Welcome() {
 
     if (hidden === "")
         setTimeout(() => {
-            console.log(hidden)
             if (hidden === "no-display")
                 return
             hide("hidden")

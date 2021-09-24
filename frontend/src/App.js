@@ -13,18 +13,25 @@ import Live from "./components/Live"
 
 
 
+
 function App() {
-  var [tabElement, switchTab] = useState(<About></About>);
-
   var changeTab = (newTab) => {
-    switch (newTab) {
-      case "About":
-        switchTab(<About></About>)
-        break
-      case "Locations":
-        switchTab(<Locations></Locations>)
-        break
 
+    switch (newTab) {
+      case "Live":
+        switchView(<Live />);
+
+        switchViewTab(<><ViewTab active="active" title="Live" changeTabInput={changeTab} />
+          <ViewTab active="no-active" title="Data" changeTabInput={changeTab} />
+        </>)
+        break
+      case "Data":
+        switchViewTab(<><ViewTab active="no-active" title="Live" changeTabInput={changeTab} />
+          <ViewTab active="active" title="Data" changeTabInput={changeTab} />
+        </>)
+        switchView(<Data />);
+        break
+      default:
     }
   }
 
