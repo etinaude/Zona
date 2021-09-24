@@ -1,12 +1,14 @@
 import './App.scss';
 import React, { useState } from 'react';
-import Table from './components/Table';
-import Graph from './components/Chart';
-import Nav from './components/Nav';
-import About from "./pages/About"
-import Locations from "./pages/Locations"
+// import Table from './components/Table';
+import ViewTab from './components/ViewTab';
+// import Graph from './components/Chart';
+
+// import About from "./pages/About"
+// import Locations from "./pages/Locations"
 import Welcome from "./pages/Welcome"
 import Live from "./components/Live"
+import Data from "./components/Data"
 
 
 
@@ -35,6 +37,11 @@ function App() {
     }
   }
 
+  var [viewElement, switchView] = useState(<Live />);
+  var [viewTab, switchViewTab] = useState(
+    <><ViewTab active="active" title="Live" changeTabInput={changeTab} />
+      <ViewTab active="no-active" title="Data" changeTabInput={changeTab} />
+    </>);
 
 
   return (
@@ -42,13 +49,11 @@ function App() {
       <div className="background"></div>
       <Welcome />
       <div className="template">
-        <div className="tabs">
-          <div className="active">Live</div>
-          <div className="no-active">Data</div>
-
+        <div className="view-tabs">
+          {viewTab}
         </div>
         <div className="room-area">
-          <Live />
+          {viewElement}
         </div>
         <div className="room-tab">
           <div className="active"></div>
@@ -58,12 +63,7 @@ function App() {
         </div>
 
       </div>
-      {/* <Nav changeTab={changeTab} ></Nav> */}
-      {/* <Locations></Locations> */}
-      {/* {tabElement} */}
-      {/* <About></About> */}
-      {/* <Table></Table> */}
-      {/* <Graph></Graph> */}
+
     </div >
   );
 }

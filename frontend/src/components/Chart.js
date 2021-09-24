@@ -23,20 +23,20 @@ export default class Table extends React.Component {
         getData();
     }
 
-    data =
-        [
-            {
-                label: 'Series 2',
-                data: [[0, 1], [1, 2]]
-            }
-        ]
+    series =
+        () => ({
+            type: 'area'
+        })
+
+
 
     axes = [
-        { primary: true, type: 'linear', position: 'bottom' },
-        { type: 'linear', position: 'left' }
+        { primary: true, type: 'time', position: 'bottom' },
+        { type: 'linear', position: 'left', stacked: true }
     ]
 
     render() {
+
         return (
             <div
                 style={{
@@ -44,16 +44,21 @@ export default class Table extends React.Component {
                     height: '500px'
                 }}
             >
-                <Chart data={this.state.data} axes={this.axes} />
+                <Chart data={this.state.data} axes={this.axes} series={this.series} />
             </div>
         )
     }
 
     formatData(rawData) {
-        let data = []
-        for (let i = 0; i < rawData.length; i++) {
-            data.push([i, rawData[i].rooms[0].count])
+
+        let data = [[new Date(), 0]]
+        for (let datum of rawData) {
+            console.log(new Date(datum.time))
+            data.push([datum.time, datum.rooms[0].count])
         }
+        data = data.sort((a, b) => b.time - a.time)
+
+        console.log(data)
         return [{
             label: 'series', data: data
         }]
