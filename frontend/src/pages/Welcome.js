@@ -5,13 +5,21 @@ import React, { useState } from 'react';
 
 
 function Welcome() {
-    var first = true
     var [hidden, hide] = useState("");
 
-    if (first)
+
+    if (hidden === "")
         setTimeout(() => {
+            console.log(hidden)
+            if (hidden === "no-display")
+                return
             hide("hidden")
-        }, 3000);
+
+            setTimeout(() => {
+                hide("no-display")
+            }, 2000)
+
+        }, 3000)
 
     return (
         <><div className={"Welcome " + hidden} >
