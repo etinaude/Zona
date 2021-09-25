@@ -46,7 +46,7 @@ def entry():
     return "200"
 
 
-@app.route('/image', methods = ['POST'])
+@app.route('/zona/image', methods = ['POST'])
 def image():
     file = request.files['image']
     # TODO BEN DO YOUR THING HERE
@@ -75,7 +75,7 @@ def image():
         'count': 40.0
     }]
 '''
-@app.route('/entries/all', methods = ['GET'])
+@app.route('/zona/entries/all', methods = ['GET'])
 def all():
     start = 0;
     end = 9999999999999
