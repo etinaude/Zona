@@ -33,7 +33,7 @@ def index():
     pass
 
 
-@app.route('/entry', methods = ['POST'])
+@app.route('/zona/entry', methods = ['POST'])
 def entry():
     print(request.json)
     result = db.insert_one(request.json)
@@ -42,7 +42,7 @@ def entry():
     return "200"
 
 
-@app.route('/image', methods = ['POST'])
+@app.route('/zona/image', methods = ['POST'])
 def image():
     file = request.files['image']
     # TODO BEN DO YOUR THING HERE
@@ -71,7 +71,7 @@ def image():
         'count': 40.0
     }]
 '''
-@app.route('/entries/all', methods = ['GET'])
+@app.route('/zona/entries/all', methods = ['GET'])
 def all():
     start = 0;
     end = 9999999999999
