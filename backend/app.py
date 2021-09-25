@@ -77,6 +77,7 @@ def image():
 '''
 @app.route('/zona/entries/all', methods = ['GET'])
 def all():
+    responseData = []
     start = 0;
     end = 9999999999999
     args = request.args
@@ -95,7 +96,20 @@ def all():
     else:
         result = list(db.find({"time": {"$gt": start, "$lt":end}}))
 
-    return str(result)
+    i = 0
+    for entry in result:
+        i += 1
+        responseData.append(
+            {
+                "time": entry["time"],
+                "roomName": entry["roomName"],
+                "roomId": entry["roomId"],
+                "count": entry["count"],
+                "id": str(entry["_id"])
+            }
+        )
+
+    return Response(json.dumps(responseData),  mimetype='application/json')
 
 
 if __name__ == '__main__':
