@@ -1,23 +1,15 @@
 import './App.scss';
 import React, { useState } from 'react';
-// import Table from './components/Table';
 import ViewTab from './components/ViewTab';
-// import Graph from './components/Chart';
+import Table from './components/Chart';
 
 // import About from "./pages/About"
 // import Locations from "./pages/Locations"
 import Welcome from "./pages/Welcome"
 import Live from "./components/Live"
-import Data from "./components/Data"
-
-
-
-
-
-
 
 function App() {
-  var roomNumber = 0
+  var roomNumber = 1
   var tab = "Live"
 
 
@@ -38,7 +30,7 @@ function App() {
         switchViewTab(<><ViewTab active="no-active" title="Live" changeTabInput={changeTab} />
           <ViewTab active="active" title="Data" changeTabInput={changeTab} />
         </>)
-        switchView(<Data roomNumber={roomNumber} />);
+        switchView(<Table roomNumber={roomNumber} />);
         break
       default:
     }
@@ -48,19 +40,20 @@ function App() {
 
   var changeRoom = (number) => {
     roomNumber = number;
-    if (tab === "Live") {
-      switchView(<Live roomNumber={roomNumber} />);
-    } else {
-      switchView(<Data roomNumber={roomNumber} />);
-    }
+    switchView(<></>);
 
+    if (tab === "Live") {
+      switchView(<Live roomNumber={number} />);
+    } else {
+      switchView(<Table roomNumber={number} />);
+    }
 
     switchRooms(
       <>
-        <div onClick={() => changeRoom(0)} className={number === 0 ? "active" : "no-active"}></div>
         <div onClick={() => changeRoom(1)} className={number === 1 ? "active" : "no-active"}></div>
         <div onClick={() => changeRoom(2)} className={number === 2 ? "active" : "no-active"}></div>
         <div onClick={() => changeRoom(3)} className={number === 3 ? "active" : "no-active"}></div>
+        <div onClick={() => changeRoom(4)} className={number === 4 ? "active" : "no-active"}></div>
       </>)
   }
 
@@ -68,10 +61,10 @@ function App() {
 
   var [rooms, switchRooms] = useState(
     <>
-      <div onClick={() => changeRoom(0)} className="active"></div>
-      <div onClick={() => changeRoom(1)} className="no-active"></div>
+      <div onClick={() => changeRoom(1)} className="active"></div>
       <div onClick={() => changeRoom(2)} className="no-active"></div>
       <div onClick={() => changeRoom(3)} className="no-active"></div>
+      <div onClick={() => changeRoom(4)} className="no-active"></div>
     </>);
   var [viewElement, switchView] = useState(<Live roomNumber="6" />);
   var [viewTab, switchViewTab] = useState(

@@ -1,63 +1,66 @@
 import { Chart } from 'react-charts'
 import { getAllData } from '../services/api';
-import React from 'react';
+import React, { useState } from 'react';
 
 
-export default class Table extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            data: [],
-        };
+function Table(props) {
+    var [data, dataUpdate] = useState([]);
+
+
+    React.useEffect(() => {
+        setUpdate(props.roomNumber);
+    }, [props.roomNumber]);
+
+    async function setUpdate(room) {
+        dataUpdate(await getData(room))
     }
 
-    componentDidMount() {
-        const getData = async () => {
-            const response = await getAllData();
-            var data = await this.formatData(await response.json());
-            this.setState({
-                data: data
-            });
-        };
-        getData();
-    }
 
-    series =
+
+    var series =
         () => ({
-            type: 'area'
-        })
+            type: 'line'
+        })//change to "area"
 
 
 
-    axes = [
+    var axes = [
         { primary: true, type: 'time', position: 'bottom' },
         { type: 'linear', position: 'left', stacked: true }
     ]
 
-    render() {
 
-        return (
+    return (
+        <div className="center-container">
             <div
                 style={{
                     width: '80%',
                     height: '500px'
                 }}
             >
-                <Chart data={this.state.data} axes={this.axes} series={this.series} />
+                <Chart data={data} axes={axes} series={series} />
             </div>
-        )
-    }
-
-    formatData(rawData) {
-
-        let data = [[new Date(), 0]]
-        for (let datum of rawData) {
-            data.push([datum.time, datum.rooms[0].count])
-        }
-        data = data.sort((a, b) => b.time - a.time)
-
-        return [{
-            label: 'series', data: data
-        }]
-    }
+        </div>
+    )
 }
+
+async function getData(roomNumber) {
+    const response = await getAllData(undefined, undefined, roomNumber);
+    var data = await formatData(await response.json());
+    return data;
+};
+
+function formatData(rawData) {
+
+    let data = [[new Date(), 0]]
+    for (let datum of rawData) {
+        data.push([datum.time, datum.count])
+    }
+    data = data.sort((a, b) => a.time - b.time)
+
+    return [{
+        label: 'series', data: data
+    }]
+}
+
+export default Table;
