@@ -43,15 +43,26 @@ def entry():
 
 @app.route('/entries/all', methods = ['GET'])
 def all():
-    result = list(db.find({}))
+    start = 0;
+    end = 9999999999999
+    args = request.args
+
+
+
+    if("start" in args):
+        start = int(args["start"])
+    if("end" in args):
+        end = int(args["end"])
+
+
+    if("room" in args):
+        result = list(db.find({"roomId": int(args["room"]), "time": {"$gt": start, "$lt":end}}))
+        print(result)
+    else:
+        result = list(db.find({"time": {"$gt": start, "$lt":end}}))
+
     return str(result)
 
-@app.route('/entries/time', methods = ['GET'])
-def time():
-    start = (request.args.to_dict()["start"])
-    end = (request.args.to_dict()["end"])
-    result = list(db.find({"time": {"$gt": start, "$lt":end}}))
-    return str(result)
 
 if __name__ == '__main__':
     app.debug = True
