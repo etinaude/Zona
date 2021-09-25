@@ -1,19 +1,23 @@
-from flask import Flask, render_template, request, make_response, jsonify
 # import gspread
 # from oauth2client.service_account import ServiceAccountCredentials
+from flask import Flask, request,Response
+from flask_cors import CORS, cross_origin
 from pymongo import MongoClient
 from random import randint
 from dotenv import dotenv_values
-
 import time
+import pytest
+import json
 
 
-env = dotenv_values(".env")
-
-# databse init
-client = MongoClient("mongodb+srv://"+env["mongoUsr"]+":"+env["mongoPw"]+"@cluster0.4rzpy.mongodb.net/myFirstDatabase?retryWrites=true&w=majority")
-db=client.zona.entries
 app = Flask(__name__)
+env = dotenv_values(".env")
+client = MongoClient("mongodb+srv://"+env["mongoUsr"]+":"+env["mongoPw"]+"@cluster0.4rzpy.mongodb.net/myFirstDatabase?retryWrites=true&w=majority")
+db = client.zona.entries
+
+cors = CORS(app, resources={r"*": {"origins": "*"}})
+
+
 
 # google sheets setup
 # scope = [
@@ -33,7 +37,7 @@ def index():
     pass
 
 
-@app.route('/entry', methods = ['POST'])
+@app.route('/zona/entry', methods = ['POST'])
 def entry():
     print(request.json)
     result = db.insert_one(request.json)
@@ -41,12 +45,26 @@ def entry():
     print(result)
     return "200"
 
-@app.route('/entries/all', methods = ['GET'])
+@app.route('/zona/entries/all', methods = ['GET'])
+@cross_origin()
 def all():
-    result = list(db.find({}))
-    return str(result)
+    results = list(db.find({}))
+    responseData = []
+    i = 0
+    for entry in results:
+        i += 1
+        responseData.append(
+            {
+                "time": entry["time"],
+                "rooms": entry["rooms"],
+                "id": i
+                # "id": str(entry["_id"])
+            }
+        )
 
-@app.route('/entries/time', methods = ['GET'])
+    return Response(json.dumps(responseData),  mimetype='application/json')
+
+@app.route('/zona/entries/time', methods = ['GET'])
 def time():
     start = (request.args.to_dict()["start"])
     end = (request.args.to_dict()["end"])
@@ -56,3 +74,7 @@ def time():
 if __name__ == '__main__':
     app.debug = True
     app.run()
+
+
+def test_answer():
+    return True
