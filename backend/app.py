@@ -38,6 +38,7 @@ def index():
 
 
 @app.route('/zona/entry', methods = ['POST'])
+@cross_origin()
 def entry():
     print(request.json)
     result = db.insert_one(request.json)
@@ -47,6 +48,7 @@ def entry():
 
 
 @app.route('/zona/image', methods = ['POST'])
+@cross_origin()
 def image():
     file = request.files['image']
     # TODO BEN DO YOUR THING HERE
@@ -76,6 +78,7 @@ def image():
     }]
 '''
 @app.route('/zona/entries/all', methods = ['GET'])
+@cross_origin()
 def all():
     start = 0;
     end = 9999999999999
