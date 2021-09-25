@@ -41,6 +41,14 @@ def entry():
     print(result)
     return "200"
 
+
+@app.route('/image', methods = ['POST'])
+def image():
+    file = request.files['image']
+    # TODO BEN DO YOUR THING HERE
+
+    return jsonify({'msg': 'success'})
+
 @app.route('/entries/all', methods = ['GET'])
 def all():
     start = 0;
