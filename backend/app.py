@@ -1,19 +1,23 @@
-from flask import Flask, render_template, request, make_response, jsonify
 # import gspread
 # from oauth2client.service_account import ServiceAccountCredentials
+from flask import Flask, request,Response
+from flask_cors import CORS, cross_origin
 from pymongo import MongoClient
 from random import randint
 from dotenv import dotenv_values
-
 import time
+import pytest
+import json
 
 
-env = dotenv_values(".env")
-
-# databse init
-client = MongoClient("mongodb+srv://"+env["mongoUsr"]+":"+env["mongoPw"]+"@cluster0.4rzpy.mongodb.net/myFirstDatabase?retryWrites=true&w=majority")
-db=client.zona.entries
 app = Flask(__name__)
+env = dotenv_values(".env")
+client = MongoClient("mongodb+srv://"+env["mongoUsr"]+":"+env["mongoPw"]+"@cluster0.4rzpy.mongodb.net/myFirstDatabase?retryWrites=true&w=majority")
+db = client.zona.entries
+
+cors = CORS(app, resources={r"*": {"origins": "*"}})
+
+
 
 # google sheets setup
 # scope = [
@@ -33,7 +37,7 @@ def index():
     pass
 
 
-@app.route('/entry', methods = ['POST'])
+@app.route('/zona/entry', methods = ['POST'])
 def entry():
     print(request.json)
     result = db.insert_one(request.json)
