@@ -49,6 +49,28 @@ def image():
 
     return jsonify({'msg': 'success'})
 
+
+'''
+    calls eg the following:
+    {{URL}}/entries/all --> returns all entries
+    {{URL}}/entries/all?room=1 --> returns all entries in room 1
+    {{URL}}/entries/all?room=1&start=1631437204333&end=1831437204333 --> returns all entries in room 1 filter by UTC time
+
+
+    Query params:
+    room: room number (int)
+    start: start timeDate UTC (int)
+    end: end timeDate UTC (int)
+
+    in form:
+    [{
+        '_id': ObjectId('614e6b777a07751bf72c9ee0'),
+        'time': 1631437204333.0,
+        'roomName': 'Digi Lab',
+        'roomId': 2.0,
+        'count': 40.0
+    }]
+'''
 @app.route('/entries/all', methods = ['GET'])
 def all():
     start = 0;
