@@ -1,4 +1,8 @@
 dnspython
 flask
+flask_cors
+numpy
 pymongo
 python-dotenv
+opencv-python
+imutils
