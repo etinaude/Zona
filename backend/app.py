@@ -18,6 +18,7 @@ app = Flask(__name__)
 env = dotenv_values(".env")
 client = MongoClient("mongodb+srv://"+env["mongoUsr"]+":"+env["mongoPw"]+"@cluster0.4rzpy.mongodb.net/myFirstDatabase?retryWrites=true&w=majority")
 db = client.zona.entries
+camdb = client.zona.cameras
 
 cors = CORS(app, resources={r"*": {"origins": "*"}})
 
@@ -65,7 +66,15 @@ def entry(jsonToEnter):
 @app.route('/zona/image', methods = ['POST'])
 @cross_origin()
 def image():
+    #Get image and camera ID from request
     file = request.files['image']
+    camID = request.form['id']
+
+    #get room name
+    roomName = camdb.find_one({'roomId': camID}, {'roomName' : 1})
+    if(not roomName):
+        print("ERROR: 404 Camera does not exist \nCameraID:", camID)
+        return json.dumps({'msg': 'ERROR: 404 Camera does not exist'})
     
     # Reading the Image into buffer then into open-cv
     file = np.fromfile(file)
@@ -89,7 +98,7 @@ def image():
     #Placing that into a json
     jsonToSend = {
         'time': time.time(),
-        'roomName': 'Digi Lab', 'roomId': 1, #Need a way to identify the room.
+        'roomName': roomName, 'roomId': camID, #Need a way to identify the room.
         'count': numPeople}
     
     #Putting it into the database
