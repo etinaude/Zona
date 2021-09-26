@@ -95,7 +95,7 @@ def image():
     #Putting it into the database
     entry(jsonToSend)
 
-    return json.dump({'msg': 'success'})
+    return json.dumps({'msg': 'success'})
 
 
 '''
