@@ -19,7 +19,7 @@ function Table(props) {
 
     var series =
         () => ({
-            type: 'line'
+            type: 'area'
         })//change to "area"
 
 
@@ -52,9 +52,9 @@ async function getData(roomNumber) {
 
 function formatData(rawData) {
 
-    let data = [[new Date(), 0]]
+    let data = []
     for (let datum of rawData) {
-        data.push([datum.time, datum.count])
+        data.push([datum.time * 1000, datum.count])
     }
     data = data.sort((a, b) => a.time - b.time)
 
