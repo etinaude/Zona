@@ -42,7 +42,7 @@ function Table(props) {
 
     return (
         <>
-            <div>
+            <div class="time">
                 <ToggleButtonGroup
                     value={selectedScale}
                     exclusive
@@ -67,8 +67,8 @@ function Table(props) {
             <div className="center-container">
                 <div
                     style={{
-                        width: '80%',
-                        height: '500px'
+                        width: '90%',
+                        height: '700px'
                     }}
                 >
                     <Chart data={data} axes={axes} series={series} />
