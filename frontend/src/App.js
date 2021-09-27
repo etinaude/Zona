@@ -76,7 +76,7 @@ function App() {
   return (
     <div className="app">
       <div className="background"></div>
-      {/* <Welcome /> */}
+      <Welcome />
       <div className="template">
         <div className="view-tabs">
           {viewTab}

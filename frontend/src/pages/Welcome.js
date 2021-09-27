@@ -1,13 +1,8 @@
 import '../App.scss';
 import React, { useState } from 'react';
 
-
-
-
 function Welcome() {
     var [hidden, hide] = useState("");
-
-
     if (hidden === "")
         setTimeout(() => {
             if (hidden === "no-display")
@@ -31,13 +26,5 @@ function Welcome() {
 
     );
 }
-
-
-
-
-
-
-
-
 
 export default Welcome;
