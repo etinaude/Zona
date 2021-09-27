@@ -75,21 +75,21 @@ def image():
     if(not roomName):
         print("ERROR: 404 Camera does not exist \nCameraID:", camID)
         return json.dumps({'msg': 'ERROR: 404 Camera does not exist'})
-    
+
     # Reading the Image into buffer then into open-cv
     file = np.fromfile(file)
     image = cv2.imdecode(file, cv2.IMREAD_COLOR)
-   
+
     # Resizing the Image
     image = imutils.resize(image, width=min(400, image.shape[1]))
-    
+
     #Sometimes increases detection by turning the image black and white before looking
     imageGray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 
     # Detecting all the regions in the image that has a "pedestrian" inside it
-    (people, confidences) = hog.detectMultiScale(imageGray, 
+    (people, confidences) = hog.detectMultiScale(imageGray,
                                     winStride=(2, 2), #Could also use 1, increases computation cost but is a little better.
-                                    padding=(10, 10), 
+                                    padding=(10, 10),
                                     scale=1.02)
 
     #calculating number of people
@@ -100,7 +100,7 @@ def image():
         'time': time.time(),
         'roomName': roomName, 'roomId': camID, #Need a way to identify the room.
         'count': numPeople}
-    
+
     #Putting it into the database
     entry(jsonToSend)
 
@@ -131,37 +131,55 @@ def image():
 @app.route('/zona/entries/all', methods = ['GET'])
 @cross_origin()
 def all():
-    responseData = []
+    responseData = {
+        "roomName": "",
+        "roomId": "",
+        "entries":[]
+        }
     start = 0;
     end = 9999999999999
     args = request.args
-
-
+    steps = 20
 
     if("start" in args):
         start = int(args["start"])
     if("end" in args):
         end = int(args["end"])
+    if("increment" in args):
+        steps = int(args["increment"])
 
-
+    #.sort({"time": 1})
     if("room" in args):
         result = list(db.find({"roomId": int(args["room"]), "time": {"$gt": start, "$lt":end}}))
-        print(result)
     else:
-        result = list(db.find({"time": {"$gt": start, "$lt":end}}))
+        return Response("please include a room", 500)
+        result = list(db.find({"time": {"$gt": start, "$lt":end}}).sort({"time": 1}))
 
-    i = 0
-    for entry in result:
-        i += 1
-        responseData.append(
-            {
-                "time": entry["time"],
-                "roomName": entry["roomName"],
-                "roomId": entry["roomId"],
-                "count": entry["count"],
-                "id": str(entry["_id"])
+    responseData["roomName"] = result[0]["roomName"]
+    responseData["roomId"] = result[0]["roomId"]
+
+
+    groups = []
+    for i in range(steps):
+        print(len(groups))
+        groups.append({"count": 0, "total": 0, "time": 0})
+
+    for i in range(len(result)):
+        # find appropriate cell and adjust for rounding
+        currentSteps = groups[round(steps*i/len(result) - 0.5)]
+        currentSteps["count"] += 1
+        currentSteps["total"] += result[i]["count"]
+        currentSteps["time"] += result[i]["time"]
+    print(groups)
+
+    for step in groups:
+        if(step["count"] == 0):
+            continue
+        data = {
+                "time": step["time"]/step["count"],
+                "count": step["total"]/step["count"],
             }
-        )
+        responseData["entries"].append(data)
 
     return Response(json.dumps(responseData),  mimetype='application/json')
 
