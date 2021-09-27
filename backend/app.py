@@ -19,6 +19,7 @@ env = dotenv_values(".env")
 client = MongoClient("mongodb+srv://"+env["mongoUsr"]+":"+env["mongoPw"]+"@cluster0.4rzpy.mongodb.net/myFirstDatabase?retryWrites=true&w=majority")
 db = client.zona.entries
 camdb = client.zona.cameras
+roomdb = client.zona.rooms
 
 cors = CORS(app, resources={r"*": {"origins": "*"}})
 
@@ -49,17 +50,35 @@ def index():
 @app.route('/zona/entry', methods = ['POST'])
 @cross_origin()
 def entry():
-    print(request.json)
-    result = db.insert_one(request.json)
-
-    print(result)
+    entry(request.json)
     return "200"
 
 #Entry for internal use
-def entry(jsonToEnter):
-    print(jsonToEnter)
-    result = db.insert_one(jsonToEnter)
+def entry(entry):
+    print(entry)
 
+    #Checking to see if the data has been changed recently
+    data = roomdb.find_one({'roomId': entry["roomId"]}, {'lastEntry': 1, 'numberOfCams': 1, 'maxPeople:': 1})
+
+    if(time.time()-data["lastEntry"] < 5): #if over 5 seconds have passed, this is a new set of images
+        result = roomdb.find_one_and_update({'roomId': entry["roomId"]}, 
+        {'$set': {'lastEntry': time.time()}, '$inc': {'currentPeople': entry["count"]}}, 
+        return_document=MongoClient.ReturnDocument.AFTER)
+    else:
+        result = roomdb.find_one_and_update({'roomId': entry["roomId"]}, 
+        {'$set': {'lastEntry': time.time(), 'currentPeople': entry["count"]}}, 
+        return_document=MongoClient.ReturnDocument.AFTER)
+    print(result)
+
+    #Checking if over max
+    currentPeople = result["currentPeople"]
+    if(currentPeople >= data["maxPeople"]):
+        #Send alert message ---------------------------------------------------------------------------------- TODO
+        pass
+
+    #Setting number of people to total people for entry
+    entry["count"] = currentPeople
+    result = db.insert_one(entry)
     print(result)
 
 
@@ -71,10 +90,10 @@ def image():
     camID = request.form['id']
 
     #get room name
-    roomName = camdb.find_one({'roomId': camID}, {'roomName' : 1})
-    if(not roomName):
+    room = camdb.find_one({'camId': camID}, {'roomName' : 1, "roomId" : 1})
+    if(not room):
         print("ERROR: 404 Camera does not exist \nCameraID:", camID)
-        return json.dumps({'msg': 'ERROR: 404 Camera does not exist'})
+        return Response(404, 'ERROR: 404 Camera does not exist')
 
     # Reading the Image into buffer then into open-cv
     file = np.fromfile(file)
@@ -97,9 +116,9 @@ def image():
 
     #Placing that into a json
     jsonToSend = {
-        'time': time.time(),
-        'roomName': roomName, 'roomId': camID, #Need a way to identify the room.
-        'count': numPeople}
+        'time': time.time(), #Timestamp
+        'roomName': room["roomName"], 'roomId': room["roomId"], "camId": camID, #Identification
+        'count': numPeople} #Number of people
 
     #Putting it into the database
     entry(jsonToSend)
