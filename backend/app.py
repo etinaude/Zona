@@ -59,17 +59,8 @@ def entry(entry):
 
     #Checking to see if the data has been changed recently
     data = roomdb.find_one({'roomId': entry["roomId"]}, {'lastEntry': 1, 'numberOfCams': 1, 'maxPeople:': 1})
-    lastEntry = data["lastEntry"]
-    numberOfCams = data["numberOfCams"]
-    maxPeople = data["maxPeople"]
-    if(time.time()-lastEntry < 5): #if over 5 seconds have passed, this is a new set of images
-    #Two ways to do this actualy, like above, or just have each room have camIds start at 1 and if it is the 1 cam it resets
-        addNumber = True
-    else:
-        addNumber = False
 
-    #Sending Data to room database
-    if(addNumber):
+    if(time.time()-data["lastEntry"] < 5): #if over 5 seconds have passed, this is a new set of images
         result = roomdb.find_one_and_update({'roomId': entry["roomId"]}, 
         {'$set': {'lastEntry': time.time()}, '$inc': {'currentPeople': entry["count"]}}, 
         return_document=MongoClient.ReturnDocument.AFTER)
@@ -81,8 +72,8 @@ def entry(entry):
 
     #Checking if over max
     currentPeople = result["currentPeople"]
-    if(currentPeople >= maxPeople):
-        #Send alert message
+    if(currentPeople >= data["maxPeople"]):
+        #Send alert message ---------------------------------------------------------------------------------- TODO
         pass
 
     #Setting number of people to total people for entry
@@ -102,7 +93,7 @@ def image():
     room = camdb.find_one({'camId': camID}, {'roomName' : 1, "roomId" : 1})
     if(not room):
         print("ERROR: 404 Camera does not exist \nCameraID:", camID)
-        return json.dumps({'msg': 'ERROR: 404 Camera does not exist'})
+        return Response(404, 'ERROR: 404 Camera does not exist')
 
     # Reading the Image into buffer then into open-cv
     file = np.fromfile(file)
