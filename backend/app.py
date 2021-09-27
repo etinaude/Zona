@@ -62,7 +62,7 @@ def entry(entry):
     lastEntry = data["lastEntry"]
     numberOfCams = data["numberOfCams"]
     maxPeople = data["maxPeople"]
-    if(time.time()-lastEntry < 1/numberOfCams):
+    if(time.time()-lastEntry < 5): #if over 5 seconds have passed, this is a new set of images
     #Two ways to do this actualy, like above, or just have each room have camIds start at 1 and if it is the 1 cam it resets
         addNumber = True
     else:
