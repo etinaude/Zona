@@ -81,7 +81,7 @@ function Table(props) {
 async function getData(roomNumber, scale) {
     var date = new Date().getTime() / 1000;
     if (scale === undefined) scale = 70
-    var start = date - (scale * 86400);
+    var start = date - (scale * 864);
 
     console.log(Math.round(start), Math.round(date))
     const response = await getAllData(Math.round(start), Math.round(date), roomNumber);
@@ -92,7 +92,7 @@ async function getData(roomNumber, scale) {
 function formatData(rawData) {
 
     let data = []
-    for (let datum of rawData) {
+    for (let datum of rawData.entries) {
         data.push([datum.time * 1000, datum.count])
     }
     data = data.sort((a, b) => a.time - b.time)
