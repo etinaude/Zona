@@ -3,21 +3,18 @@ import { getAllData } from '../services/api';
 import React, { useState } from 'react';
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
-import { ConstructionOutlined, DateRange } from '@mui/icons-material';
-
-
 
 function Table(props) {
     var [data, dataUpdate] = useState([]);
     const [selectedScale, setScale] = React.useState(1);
 
-
     React.useEffect(() => {
         setUpdate(props.roomNumber);
     }, [props.roomNumber]);
 
-    async function setUpdate(room) {
-        dataUpdate(await getData(room))
+    async function setUpdate(room, scale) {
+        var ret = (await getData(room, scale))
+        dataUpdate(ret);
     }
 
 
@@ -26,23 +23,20 @@ function Table(props) {
             type: 'area'
         })//change to "area"
 
-
-
     var axes = [
         { primary: true, type: 'time', position: 'bottom' },
         { type: 'linear', position: 'left', stacked: true }
     ]
 
-
-    const handleAlignment = (event, newAlignment) => {
-        console.log(newAlignment, event)
-        setScale(newAlignment);
+    const handleAlignment = async (event, scale) => {
+        setScale(scale)
+        setUpdate(props.roomNumber, selectedScale);
     };
 
 
     return (
         <>
-            <div>
+            <div class="time">
                 <ToggleButtonGroup
                     value={selectedScale}
                     exclusive
@@ -67,8 +61,8 @@ function Table(props) {
             <div className="center-container">
                 <div
                     style={{
-                        width: '80%',
-                        height: '500px'
+                        width: '90%',
+                        height: '700px'
                     }}
                 >
                     <Chart data={data} axes={axes} series={series} />
@@ -81,16 +75,13 @@ function Table(props) {
 async function getData(roomNumber, scale) {
     var date = new Date().getTime() / 1000;
     if (scale === undefined) scale = 70
-    var start = date - (scale * 864);
-
-    console.log(Math.round(start), Math.round(date))
+    var start = date - (scale * 86400);
     const response = await getAllData(Math.round(start), Math.round(date), roomNumber);
     var data = await formatData(await response.json());
     return data;
 };
 
 function formatData(rawData) {
-
     let data = []
     for (let datum of rawData.entries) {
         data.push([datum.time * 1000, datum.count])
