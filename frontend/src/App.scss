@@ -1,6 +1,13 @@
+$primary: #315878;
+$secondary: #59a1a4;
+$tertiary: #78c89d;
+$quaternary: #9be9a1;
+
 .background {
-  background-image: url(./assets/background.png);
-  background-size: cover;
+  // background-image: url(./assets/background.png);
+  // background-size: cover;
+  // background: #78c89d;
+  background: linear-gradient(90deg, #315878 0%, #59a1a4 100%);
   position: fixed;
   top: 0;
   left: 0;
@@ -60,8 +67,8 @@
   left: 0;
   width: calc(100% - 100px);
   height: calc(100% - 60px);
-  background-color: #fff5;
-  border-radius: 0 50px 50px 50px;
+  background-color: #fff;
+  border-radius: 0 25px 25px 25px;
   backdrop-filter: blur(10px);
 
   .center-container {
@@ -170,21 +177,21 @@
 }
 
 .no-active {
-  background-color: #35916d55;
+  background-color: #78c89d;
   color: #fff;
 }
 
 .no-active:hover {
-  background-color: #44be8f55;
+  background-color: #9be9a1;
 }
 
 .active {
-  background-color: #fff9;
+  background-color: #fff;
   color: #339670;
   cursor: pointer;
   transition: 0.2s ease;
 }
 
 .active:hover {
-  background-color: rgba(193, 255, 206, 0.6);
+  background-color: #78c89d;
 }
