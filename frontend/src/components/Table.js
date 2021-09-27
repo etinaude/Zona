@@ -25,7 +25,6 @@ export default class Table extends React.Component {
         const getData = async () => {
             const response = await getAllData();
             var data = await this.formatData(await response.json());
-            console.log(data)
             this.setState({
                 data: data
             });

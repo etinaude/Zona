@@ -1,5 +1,6 @@
 
 export const getAllData = async (start, end, room) => {
+    if (room === undefined) room = 1
     var headers =
     {
         method: 'GET',

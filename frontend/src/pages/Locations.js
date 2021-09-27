@@ -11,7 +11,6 @@ export default class Locations extends React.Component {
     }
 
     toggleHover = () => {
-        console.log(this.state.hover)
         this.setState({ hover: !this.state.hover })
     }
 
@@ -86,7 +85,6 @@ class NavButton extends React.Component {
 
 
         const routeChange = () => {
-            console.log("HRERE")
             let path = `newPath`;
             this.props.history.push(path);
         }
