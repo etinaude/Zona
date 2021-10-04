@@ -58,7 +58,7 @@ def entry(entry):
     print(entry)
 
     #Checking to see if the data has been changed recently
-    data = roomdb.find_one({'roomId': entry["roomId"]}, {'lastEntry': 1, 'numberOfCams': 1, 'maxPeople:': 1})
+    data = roomdb.find_one({'roomId': entry["roomId"]}, {'lastEntry': 1, 'numberOfCams': 1, 'maxPeople': 1})
 
     if(time.time()-data["lastEntry"] < 5): #if over 5 seconds have passed, this is a new set of images
         result = roomdb.find_one_and_update({'roomId': entry["roomId"]}, 
