@@ -6,8 +6,7 @@ $quaternary: #9be9a1;
 .background {
   // background-image: url(./assets/background.png);
   // background-size: cover;
-  // background: #78c89d;
-  background: linear-gradient(90deg, #315878 0%, #59a1a4 100%);
+  background: #a0c379;
   position: fixed;
   top: 0;
   left: 0;
@@ -67,7 +66,7 @@ $quaternary: #9be9a1;
   left: 0;
   width: calc(100% - 100px);
   height: calc(100% - 60px);
-  background-color: #fff;
+  background-color: #b3d390;
   border-radius: 0 25px 25px 25px;
   backdrop-filter: blur(10px);
 
@@ -183,21 +182,23 @@ $quaternary: #9be9a1;
 }
 
 .no-active {
-  background-color: #78c89d;
-  color: #fff;
+  background-color: #f3f3f3;
+  color: #22577a;
 }
 
 .no-active:hover {
-  background-color: #9be9a1;
+  background-color: #4886af;
+  color: white;
 }
 
 .active {
-  background-color: #fff;
-  color: #339670;
+  background-color: #22577a;
+  color: #ffffff;
+  cursor: pointer;
   cursor: pointer;
   transition: 0.2s ease;
 }
 
 .active:hover {
-  background-color: #78c89d;
+  background-color: #356585;
 }
