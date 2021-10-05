@@ -86,7 +86,7 @@ def entry(entry):
 def image():
     #Get image and camera ID from request
     file = request.files['image']
-    camID = request.args["id"]
+    camID = int(request.args["id"])
 
     #get room name
     room = camdb.find_one({'camId': camID}, {'roomName' : 1, "roomId" : 1})
