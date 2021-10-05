@@ -62,16 +62,15 @@ def entry(entry):
 
     if(time.time()-data["lastEntry"] < 5): #if over 5 seconds have passed, this is a new set of images
         result = roomdb.find_one_and_update({'roomId': entry["roomId"]}, 
-        {'$set': {'lastEntry': time.time()}, '$inc': {'currentPeople': entry["count"]}}, 
-        return_document=MongoClient.ReturnDocument.AFTER)
+        {'$set': {'lastEntry': time.time()}, '$inc': {'currentPeople': entry["count"]}})
+        currentPeople = result["currentPeople"] + entry["count"]
     else:
         result = roomdb.find_one_and_update({'roomId': entry["roomId"]}, 
-        {'$set': {'lastEntry': time.time(), 'currentPeople': entry["count"]}}, 
-        return_document=MongoClient.ReturnDocument.AFTER)
+        {'$set': {'lastEntry': time.time(), 'currentPeople': entry["count"]}})
+        currentPeople = result["currentPeople"]
     print(result)
 
     #Checking if over max
-    currentPeople = result["currentPeople"]
     if(currentPeople >= data["maxPeople"]):
         #Send alert message ---------------------------------------------------------------------------------- TODO
         pass
