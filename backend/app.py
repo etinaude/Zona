@@ -174,6 +174,9 @@ def all():
         return Response("please include a room", 500)
         result = list(db.find({"time": {"$gt": start, "$lt":end}}).sort({"time": 1}))
 
+    if (len(result) == 0):
+        return Response("No entries found", 404)
+
     responseData["roomName"] = result[0]["roomName"]
     responseData["roomId"] = result[0]["roomId"]
 
