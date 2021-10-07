@@ -45,7 +45,7 @@ async def on_message(message):
 
     #Dev Only Commands
     global publicChannel 
-    if message.content.startswith('$SendTestAlert') and message.author.id == 145636068060954624:
+    if message.content.startswith('$SendTestAlert') and message.author.id == 145636068060954624: #Change to Env eventualy
         await alert("no room, this is a test of the alert system")
     elif message.content.startswith('$PublicAlerts') and message.author.id == 145636068060954624:
         await message.channel.send("Alerts are now public in this channel")
