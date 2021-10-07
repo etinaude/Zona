@@ -73,7 +73,8 @@ def entry(entry):
     #Checking if over max
     if(currentPeople >= data["maxPeople"]):
         #Send alert message ---------------------------------------------------------------------------------- TODO
-        pass
+        with open('./SendAlertNow.txt', 'w') as f:
+            f.write(entry['roomName'])
 
     #Setting number of people to total people for entry
     entry["count"] = currentPeople
