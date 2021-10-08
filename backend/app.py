@@ -45,17 +45,16 @@ def entry(entry):
     data = roomdb.find_one({'roomId': entry["roomId"]}, {'lastEntry': 1, 'numberOfCams': 1, 'maxPeople': 1})
 
     if(time.time()-data["lastEntry"] < 5): #if over 5 seconds have passed, this is a new set of images
-        result = roomdb.find_one_and_update({'roomId': entry["roomId"]},
-        {'$set': {'lastEntry': time.time()}, '$inc': {'currentPeople': entry["count"]}},
-        return_document=MongoClient.ReturnDocument.AFTER)
+        result = roomdb.find_one_and_update({'roomId': entry["roomId"]}, 
+        {'$set': {'lastEntry': time.time()}, '$inc': {'currentPeople': entry["count"]}})
+        currentPeople = result["currentPeople"] + entry["count"]
     else:
-        result = roomdb.find_one_and_update({'roomId': entry["roomId"]},
-        {'$set': {'lastEntry': time.time(), 'currentPeople': entry["count"]}},
-        return_document=MongoClient.ReturnDocument.AFTER)
+        result = roomdb.find_one_and_update({'roomId': entry["roomId"]}, 
+        {'$set': {'lastEntry': time.time(), 'currentPeople': entry["count"]}})
+        currentPeople = result["currentPeople"]
     print(result)
 
     #Checking if over max
-    currentPeople = result["currentPeople"]
     if(currentPeople >= data["maxPeople"]):
         #Send alert message ---------------------------------------------------------------------------------- TODO
         pass
@@ -71,7 +70,7 @@ def entry(entry):
 def image():
     #Get image and camera ID from request
     file = request.files['image']
-    camID = request.args["id"]
+    camID = int(request.args["id"])
 
     #get room name
     room = camdb.find_one({'camId': camID}, {'roomName' : 1, "roomId" : 1})
