@@ -156,11 +156,19 @@ $quaternary: #9be9a1;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 50%;
-    height: 70%;
-    background-image: url("./assets/3d-model-demo.png");
+    width: 70%;
+    height: 90%;
+
     background-repeat: no-repeat;
     background-size: contain;
+  }
+
+  .room1 {
+    background-image: url("./assets/room1.png");
+  }
+
+  .room2 {
+    background-image: url("./assets/room2.png");
   }
 
   .live-count-container {

@@ -8,7 +8,7 @@ import React, { useState } from 'react';
 function Live(props) {
     return (
         <div className="Live">
-            <div className="render">
+            <div className={"render room" + props.roomNumber}>
 
             </div>
             <div className="live-count-container">
@@ -21,13 +21,5 @@ function Live(props) {
         </div >
     );
 }
-
-
-
-
-
-
-
-
 
 export default Live;

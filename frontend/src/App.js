@@ -3,8 +3,6 @@ import React, { useState } from 'react';
 import ViewTab from './components/ViewTab';
 import Table from './components/Chart';
 
-// import About from "./pages/About"
-// import Locations from "./pages/Locations"
 import Welcome from "./pages/Welcome"
 import Live from "./components/Live"
 
@@ -66,7 +64,7 @@ function App() {
       <div onClick={() => changeRoom(3)} className="no-active"></div>
       <div onClick={() => changeRoom(4)} className="no-active"></div>
     </>);
-  var [viewElement, switchView] = useState(<Live roomNumber="6" />);
+  var [viewElement, switchView] = useState(<Live roomNumber="1" />);
   var [viewTab, switchViewTab] = useState(
     <><ViewTab active="active" title="Live" changeTabInput={changeTab} />
       <ViewTab active="no-active" title="Data" changeTabInput={changeTab} />
@@ -76,7 +74,7 @@ function App() {
   return (
     <div className="app">
       <div className="background"></div>
-      {/* <Welcome /> */}
+      <Welcome />
       <div className="template">
         <div className="view-tabs">
           {viewTab}
