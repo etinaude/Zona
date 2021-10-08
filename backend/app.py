@@ -1,5 +1,3 @@
-# import gspread
-# from oauth2client.service_account import ServiceAccountCredentials
 import datetime
 from flask import Flask, request, Response
 from flask_cors import CORS, cross_origin
@@ -28,20 +26,6 @@ hog = cv2.HOGDescriptor()
 hog.setSVMDetector(cv2.HOGDescriptor_getDefaultPeopleDetector())
 
 
-
-# google sheets setup
-# scope = [
-    # 'https://www.googleapis.com/auth/spreadsheets',
-    # 'https://www.googleapis.com/auth/drive'
-# ]
-# credtails = ServiceAccountCredentials.from_json_keyfile_name("creds.json", scope)
-# client = gspread.authorize(credtails)
-# sheet = client.open("totally good database")
-# entries = sheet.worksheet("Sheet1")
-
-# print(entries.get_all_records())
-
-
 @app.route('/')
 def index():
     pass
@@ -61,12 +45,12 @@ def entry(entry):
     data = roomdb.find_one({'roomId': entry["roomId"]}, {'lastEntry': 1, 'numberOfCams': 1, 'maxPeople': 1})
 
     if(time.time()-data["lastEntry"] < 5): #if over 5 seconds have passed, this is a new set of images
-        result = roomdb.find_one_and_update({'roomId': entry["roomId"]}, 
-        {'$set': {'lastEntry': time.time()}, '$inc': {'currentPeople': entry["count"]}}, 
+        result = roomdb.find_one_and_update({'roomId': entry["roomId"]},
+        {'$set': {'lastEntry': time.time()}, '$inc': {'currentPeople': entry["count"]}},
         return_document=MongoClient.ReturnDocument.AFTER)
     else:
-        result = roomdb.find_one_and_update({'roomId': entry["roomId"]}, 
-        {'$set': {'lastEntry': time.time(), 'currentPeople': entry["count"]}}, 
+        result = roomdb.find_one_and_update({'roomId': entry["roomId"]},
+        {'$set': {'lastEntry': time.time(), 'currentPeople': entry["count"]}},
         return_document=MongoClient.ReturnDocument.AFTER)
     print(result)
 
@@ -122,6 +106,7 @@ def image():
 
     #Putting it into the database
     entry(jsonToSend)
+
 
     return json.dumps({'msg': 'success', 'count': numPeople})
 
