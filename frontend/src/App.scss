@@ -4,9 +4,8 @@ $tertiary: #78c89d;
 $quaternary: #9be9a1;
 
 .background {
-  // background-image: url(./assets/background.png);
-  // background-size: cover;
-  background: #a0c379;
+  background-image: url(./assets/background.png);
+  background-size: cover;
   position: fixed;
   top: 0;
   left: 0;
@@ -66,7 +65,7 @@ $quaternary: #9be9a1;
   left: 0;
   width: calc(100% - 100px);
   height: calc(100% - 60px);
-  background-color: #b3d390;
+  background-color: #fff9;
   border-radius: 0 25px 25px 25px;
   backdrop-filter: blur(10px);
 
