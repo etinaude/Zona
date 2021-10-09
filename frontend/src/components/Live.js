@@ -16,8 +16,8 @@ function Live(props) {
                     {props.roomName}
                 </div>
                 <div className="live-count-number">
-                    {props.roomNumber}
-                    <div className="live-count-text">People In the room</div>
+                    {parseInt(props.roomNumber) + 2}
+                    <div className="live-count-text">people in the room</div>
                 </div>
             </div>
 
