@@ -6,7 +6,7 @@ function ViewTab(props) {
         props.changeTabInput(props.title);
     }
     return (
-        <div className={"view-tab " + props.active} onClick={changeTab}>{props.title}</div>
+        <div className={"view-tab " + props.active} onClick={changeTab}></div>
     );
 }
 

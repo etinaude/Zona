@@ -48,10 +48,9 @@ function App() {
 
     switchRooms(
       <>
-        <div onClick={() => changeRoom(1)} className={number === 1 ? "active" : "no-active"}></div>
-        <div onClick={() => changeRoom(2)} className={number === 2 ? "active" : "no-active"}></div>
-        <div onClick={() => changeRoom(3)} className={number === 3 ? "active" : "no-active"}></div>
-        <div onClick={() => changeRoom(4)} className={number === 4 ? "active" : "no-active"}></div>
+        <div onClick={() => changeRoom(1)} className={number === 1 ? "active view-tab" : "no-active view-tab"}>Fab Lab</div>
+        <div onClick={() => changeRoom(2)} className={number === 2 ? "active view-tab" : "no-active view-tab"}>Digi Lab</div>
+        <div onClick={() => changeRoom(3)} className={number === 3 ? "active view-tab" : "no-active view-tab"}>Cabaret</div>
       </>)
   }
 
@@ -59,10 +58,9 @@ function App() {
 
   var [rooms, switchRooms] = useState(
     <>
-      <div onClick={() => changeRoom(1)} className="active"></div>
-      <div onClick={() => changeRoom(2)} className="no-active"></div>
-      <div onClick={() => changeRoom(3)} className="no-active"></div>
-      <div onClick={() => changeRoom(4)} className="no-active"></div>
+      <div onClick={() => changeRoom(1)} className="active view-tab">Fab Lab</div>
+      <div onClick={() => changeRoom(2)} className="no-active view-tab">Digi Lab</div>
+      <div onClick={() => changeRoom(3)} className="no-active view-tab">Cabaret</div>
     </>);
   var [viewElement, switchView] = useState(<Live roomNumber="1" />);
   var [viewTab, switchViewTab] = useState(
@@ -74,16 +72,16 @@ function App() {
   return (
     <div className="app">
       <div className="background"></div>
-      <Welcome />
+      {/* <Welcome /> */}
       <div className="template">
         <div className="view-tabs">
-          {viewTab}
+          {rooms}
         </div>
         <div className="room-area">
           {viewElement}
         </div>
         <div className="room-tab">
-          {rooms}
+          {viewTab}
         </div>
 
       </div>
@@ -91,13 +89,5 @@ function App() {
     </div >
   );
 }
-
-
-
-
-
-
-
-
 
 export default App;

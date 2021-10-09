@@ -56,7 +56,6 @@ export default class Table extends React.Component {
             var time = new Date(rawData[i].time).toLocaleTimeString()
             var date = new Date(rawData[i].time).toLocaleDateString()
 
-
             data.push({
                 id: rawData[i].id,
                 time: time,

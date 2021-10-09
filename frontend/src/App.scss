@@ -189,23 +189,22 @@ $quaternary: #9be9a1;
 }
 
 .no-active {
-  background-color: #f3f3f3;
-  color: #22577a;
+  background-color: #6aa59c;
+  color: #ffffff;
 }
 
 .no-active:hover {
-  background-color: #4886af;
+  background-color: #71b3a9;
   color: white;
 }
 
 .active {
-  background-color: #22577a;
-  color: #ffffff;
-  cursor: pointer;
-  cursor: pointer;
+  background-color: #fff9;
+  color: #6aa59c;
   transition: 0.2s ease;
 }
 
 .active:hover {
-  background-color: #356585;
+  background-color: #7ec5ba;
+  color: white;
 }
