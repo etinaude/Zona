@@ -153,10 +153,10 @@ $quaternary: #9be9a1;
   .render {
     position: absolute;
     top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    right: 10%;
+    transform: translate(0, -50%);
     width: 70%;
-    height: 90%;
+    height: 60%;
 
     background-repeat: no-repeat;
     background-size: contain;
@@ -172,18 +172,33 @@ $quaternary: #9be9a1;
 
   .live-count-container {
     position: absolute;
-    bottom: 80px;
-    right: 100px;
+    bottom: 50%;
+    left: 100px;
+    transform: translate(0, -50%);
     text-align: center;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
 
     .live-count-number {
+      font-size: 50px;
+      font-weight: bold;
+      color: #22577a;
+      display: flex;
+      align-items: center;
+
+      .live-count-text {
+        font-size: 20px;
+        color: black;
+        font-weight: normal;
+        padding-left: 10px;
+      }
+    }
+
+    .name {
       font-size: 100px;
       font-weight: bold;
       color: #22577a;
-    }
-
-    .live-count-text {
-      font-size: 20px;
     }
   }
 }

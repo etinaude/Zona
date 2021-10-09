@@ -8,6 +8,8 @@ import Live from "./components/Live"
 
 function App() {
   var roomNumber = 1
+  var roomName = "Fab Lab"
+
   var tab = "Live"
 
 
@@ -16,7 +18,7 @@ function App() {
     switch (newTab) {
       case "Live":
         tab = "Live"
-        switchView(<Live roomNumber={roomNumber} />);
+        switchView(<Live roomNumber={roomNumber} roomName={roomName} />);
 
         switchViewTab(<><ViewTab active="active" title="Live" changeTabInput={changeTab} />
           <ViewTab active="no-active" title="Data" changeTabInput={changeTab} />
@@ -38,10 +40,17 @@ function App() {
 
   var changeRoom = (number) => {
     roomNumber = number;
+    if (roomNumber === 1) {
+      roomName = "Fab Lab"
+    } else if (roomNumber === 2) {
+      roomName = "Digi Lab"
+    } else if (roomNumber === 3) {
+      roomName = "Cabaret"
+    }
     switchView(<></>);
 
     if (tab === "Live") {
-      switchView(<Live roomNumber={number} />);
+      switchView(<Live roomNumber={number} roomName={roomName} />);
     } else {
       switchView(<Table roomNumber={number} />);
     }
@@ -62,7 +71,7 @@ function App() {
       <div onClick={() => changeRoom(2)} className="no-active view-tab">Digi Lab</div>
       <div onClick={() => changeRoom(3)} className="no-active view-tab">Cabaret</div>
     </>);
-  var [viewElement, switchView] = useState(<Live roomNumber="1" />);
+  var [viewElement, switchView] = useState(<Live roomNumber="1" roomName={roomName} />);
   var [viewTab, switchViewTab] = useState(
     <><ViewTab active="active" title="Live" changeTabInput={changeTab} />
       <ViewTab active="no-active" title="Data" changeTabInput={changeTab} />
