@@ -19,7 +19,7 @@ function Welcome() {
         <><div className={"Welcome " + hidden} >
             <div className="welcome-logo"></div>
             <h1 className="welcome-text">WELCOME</h1>
-            <div className="privacy">Privacy Policy</div>
+            {/* <div className="privacy">Privacy Policy</div> */}
             <div className="social-links">software@etinaude.dev</div>
         </div >
         </>

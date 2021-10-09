@@ -71,8 +71,10 @@ function App() {
 
   return (
     <div className="app">
+      <div className='logo'>
+      </div>
       <div className="background"></div>
-      {/* <Welcome /> */}
+      <Welcome />
       <div className="template">
         <div className="view-tabs">
           {rooms}
@@ -84,7 +86,9 @@ function App() {
           {viewTab}
         </div>
 
+
       </div>
+      <div className="privacy">Privacy Policy</div>
 
     </div >
   );

@@ -208,3 +208,23 @@ $quaternary: #9be9a1;
   background-color: #7ec5ba;
   color: white;
 }
+
+.privacy {
+  position: fixed;
+  bottom: 50px;
+  left: 45%;
+  transform: translate(-50%, 0);
+  text-decoration: solid underline;
+  cursor: pointer;
+}
+
+.logo {
+  position: fixed;
+  top: 50px;
+  right: 100px;
+  width: 200px;
+  height: 100px;
+  background-image: url("./assets/long-logo.svg");
+  background-size: contain;
+  background-repeat: no-repeat;
+}
