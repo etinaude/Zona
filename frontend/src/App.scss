@@ -100,15 +100,20 @@ $quaternary: #9be9a1;
   height: 100vh;
   z-index: 100;
   transition: 1s ease;
+  color: #22577a;
 
   .welcome-text {
     font-size: 150px;
     position: fixed;
     top: 50%;
     left: 50%;
+    width: 50%;
+    height: 50%;
+    background-image: url("./assets/welcome.png");
+    background-repeat: no-repeat;
+    background-size: contain;
     margin: 0;
     transform: translate(-50%, -50%);
-    color: #22577a;
   }
 
   .privacy {
@@ -177,7 +182,6 @@ $quaternary: #9be9a1;
     left: 100px;
     transform: translate(0, 50%);
     text-align: center;
-    align-items: center;
     display: flex;
     flex-direction: column;
 
