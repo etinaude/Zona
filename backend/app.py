@@ -12,9 +12,8 @@ import cv2
 import imutils
 import discord
 import os
-from discord import message
+from discord import message, user
 from dotenv import dotenv_values
-from discord import user
 from discord.ext import tasks
 import threading
 import asyncio
@@ -43,8 +42,13 @@ def index():
 @app.route('/zona/entry/multiple', methods = ['POST'])
 @cross_origin()
 def entries():
-    for item in request.json:
-        entry(item)
+    request.json
+
+    result = db.insert_many(request.json)
+    print(result)
+    print(request.json)
+
+
     return "200";
 
 @app.route('/zona/entry', methods = ['POST'])
@@ -69,7 +73,7 @@ def entry(entry):
         {'$set': {'lastEntry': time.time(), 'currentPeople': entry["count"]}})
         currentPeople = result["currentPeople"]
     print(result)
-    
+
     #Checking if over max
     if(currentPeople >= data["maxPeople"]):
         #Send alert message
@@ -206,8 +210,9 @@ def all():
     return Response(json.dumps(responseData),  mimetype='application/json')
 
 
-
-
+def remove_entries():
+    #remove entries where count > 12
+    db.delete_many({"count": {"$gt": 12}})
 ##Discord bot code:
 client = discord.Client()
 
@@ -230,7 +235,6 @@ async def on_message(message):
             await message.channel.send('You have been added to the alert list.')
         else:
             await message.channel.send('You have already been added to the alert list.')
-    
     #Command to remove from alert list
     elif message.content.startswith('$removeMeFromAlertList'):
         if(message.author in alertList):
@@ -238,13 +242,12 @@ async def on_message(message):
             await message.channel.send('You have been removed from the alert list.')
         else:
             await message.channel.send('You are not on the alert list.')
-    
     #Help command
     elif isinstance(message.channel, discord.channel.DMChannel) or message.content.startswith('$helpZona'):
         await message.channel.send('Use `$addMeToAlertList` to add yourself to the alert list\nUse `$removeMeFromAlertList` to remove yourself from the alert list')
 
     #Dev Only Commands
-    global publicChannel 
+    global publicChannel
     if message.content.startswith('$SendTestAlert') and message.author.id == 145636068060954624: #Change to Env eventualy
         await alert("no room, this is a test of the alert system")
     elif message.content.startswith('$PublicAlerts') and message.author.id == 145636068060954624:
@@ -266,7 +269,7 @@ async def alert(roomName):
            m = "There have been more than the allowed number of people detected in " + roomName + "."
            embed = discord.Embed(title=m)
            await user.send(embed=embed)
-    
+
 def botThread():
     client.run(env['token'])
 
