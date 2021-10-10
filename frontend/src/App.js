@@ -67,8 +67,8 @@ function App() {
 
   var [rooms, switchRooms] = useState(
     <>
-      <div onClick={() => changeRoom(1)} className="active view-tab">Fab Lab</div>
-      <div onClick={() => changeRoom(2)} className="no-active view-tab">Digi Lab</div>
+      <div onClick={() => changeRoom(1)} className="active view-tab">Scrum</div>
+      <div onClick={() => changeRoom(2)} className="no-active view-tab">Studio</div>
       <div onClick={() => changeRoom(3)} className="no-active view-tab">Cabaret</div>
     </>);
   var [viewElement, switchView] = useState(<Live roomNumber="1" roomName={roomName} />);
