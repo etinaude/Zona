@@ -10,6 +10,14 @@ import json
 import numpy as np
 import cv2
 import imutils
+import discord
+import os
+from discord import message
+from dotenv import dotenv_values
+from discord import user
+from discord.ext import tasks
+import threading
+import asyncio
 
 
 app = Flask(__name__)
@@ -20,6 +28,8 @@ camdb = client.zona.cameras
 roomdb = client.zona.rooms
 
 cors = CORS(app, resources={r"*": {"origins": "*"}})
+
+bot_loop = None
 
 # Initializing the HOG person detector
 hog = cv2.HOGDescriptor()
@@ -53,11 +63,11 @@ def entry(entry):
         {'$set': {'lastEntry': time.time(), 'currentPeople': entry["count"]}})
         currentPeople = result["currentPeople"]
     print(result)
-
+    
     #Checking if over max
     if(currentPeople >= data["maxPeople"]):
-        #Send alert message ---------------------------------------------------------------------------------- TODO
-        pass
+        #Send alert message
+        asyncio.run_coroutine_threadsafe(alert(entry['roomName']), bot_loop)
 
     #Setting number of people to total people for entry
     entry["count"] = currentPeople
@@ -190,6 +200,86 @@ def all():
     return Response(json.dumps(responseData),  mimetype='application/json')
 
 
-if __name__ == '__main__':
-    app.debug = True
+
+
+##Discord bot code:
+client = discord.Client()
+
+alertList = []
+publicChannel = None
+
+@client.event
+async def on_ready():
+    print('We have logged in as {0.user}'.format(client))
+
+@client.event
+async def on_message(message):
+    if message.author == client.user:
+        return
+
+    #Command to add to alert list
+    elif message.content.startswith('$addMeToAlertList'):
+        if(message.author not in alertList):
+            alertList.append(message.author)
+            await message.channel.send('You have been added to the alert list.')
+        else:
+            await message.channel.send('You have already been added to the alert list.')
+    
+    #Command to remove from alert list
+    elif message.content.startswith('$removeMeFromAlertList'):
+        if(message.author in alertList):
+            alertList.remove(message.author)
+            await message.channel.send('You have been removed from the alert list.')
+        else:
+            await message.channel.send('You are not on the alert list.')
+    
+    #Help command
+    elif isinstance(message.channel, discord.channel.DMChannel) or message.content.startswith('$helpZona'):
+        await message.channel.send('Use `$addMeToAlertList` to add yourself to the alert list\nUse `$removeMeFromAlertList` to remove yourself from the alert list')
+
+    #Dev Only Commands
+    global publicChannel 
+    if message.content.startswith('$SendTestAlert') and message.author.id == 145636068060954624: #Change to Env eventualy
+        await alert("no room, this is a test of the alert system")
+    elif message.content.startswith('$PublicAlerts') and message.author.id == 145636068060954624:
+        await message.channel.send("Alerts are now public in this channel")
+        publicChannel = message.channel
+    elif message.content.startswith('$StopPublicAlerts') and message.author.id == 145636068060954624:
+        await message.channel.send("Alerts are now private")
+        publicChannel = None
+
+
+
+async def alert(roomName):
+    if(publicChannel):
+        m = "There have been more than the allowed number of people detected in " + roomName + "."
+        embed = discord.Embed(title=m)
+        await publicChannel.send(embed=embed)
+    else:
+        for user in alertList:
+           m = "There have been more than the allowed number of people detected in " + roomName + "."
+           embed = discord.Embed(title=m)
+           await user.send(embed=embed)
+    
+def botThread():
+    client.run(env['token'])
+
+def bot_loop_start(loop):
+    loop.run_forever()
+
+def appThread():
     app.run()
+
+import logging, traceback
+async def on_error(event, *args, **kwargs):
+    print('Something went wrong!')
+    logging.warning(traceback.format_exc())
+
+if __name__ == '__main__':
+    app.debug = False
+    app_thread = threading.Thread(target=appThread)
+    app_thread.start()
+    bot_loop = asyncio.get_event_loop()
+    bot_loop.create_task(botThread())
+    bot_thread = threading.Thread(target=bot_loop_start, args=(bot_loop,))
+    bot_thread.start()

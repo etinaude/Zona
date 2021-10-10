@@ -6,3 +6,4 @@ pymongo
 python-dotenv
 opencv-python
 imutils
+discord.py
