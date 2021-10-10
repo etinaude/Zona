@@ -13,7 +13,7 @@ function Welcome() {
                 hide("no-display")
             }, 2000)
 
-        }, 3000)
+        }, 1000)
 
     return (
         <><div className={"Welcome " + hidden} >
