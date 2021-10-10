@@ -25,7 +25,7 @@ Python 3.8 or later and PIP.
 Run `pip install -r requirements.txt` on the root folder.  
 Create a .env file with the following format:
 ```
-mongoPw=[MongoDB password
+mongoPw=[MongoDB password]
 mongoUsr=[MongoDB username]
 token=[Discord bot token]
 ```
