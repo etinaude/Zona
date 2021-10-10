@@ -8,7 +8,7 @@ import Live from "./components/Live"
 
 function App() {
   var roomNumber = 1
-  var roomName = "Fab Lab"
+  var roomName = "Scrum 1"
 
   var tab = "Live"
 
@@ -41,9 +41,9 @@ function App() {
   var changeRoom = (number) => {
     roomNumber = number;
     if (roomNumber === 1) {
-      roomName = "Fab Lab"
+      roomName = "Scrum 1"
     } else if (roomNumber === 2) {
-      roomName = "Digi Lab"
+      roomName = "Studio 1"
     } else if (roomNumber === 3) {
       roomName = "Cabaret"
     }
@@ -57,8 +57,8 @@ function App() {
 
     switchRooms(
       <>
-        <div onClick={() => changeRoom(1)} className={number === 1 ? "active view-tab" : "no-active view-tab"}>Fab Lab</div>
-        <div onClick={() => changeRoom(2)} className={number === 2 ? "active view-tab" : "no-active view-tab"}>Digi Lab</div>
+        <div onClick={() => changeRoom(1)} className={number === 1 ? "active view-tab" : "no-active view-tab"}>Scrum</div>
+        <div onClick={() => changeRoom(2)} className={number === 2 ? "active view-tab" : "no-active view-tab"}>Studio</div>
         <div onClick={() => changeRoom(3)} className={number === 3 ? "active view-tab" : "no-active view-tab"}>Cabaret</div>
       </>)
   }
