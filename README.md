@@ -22,8 +22,8 @@ The uses a Flask server and interfaces with a MongoDB. It also hosts a Discord b
 Python 3.8 or later and PIP.
 
 ### Installing
-run `pip install -r requirements.txt` on the root folder.
-create a .env file with the following format:
+Run `pip install -r requirements.txt` on the root folder.  
+Create a .env file with the following format:
 ```
 mongoPw=[MongoDB password
 mongoUsr=[MongoDB username]
@@ -31,7 +31,7 @@ token=[Discord bot token]
 ```
 
 ### Usage
-run `app.py`
+Run `app.py`
 
 ## Frontend
 The Fontend includes the Website.
@@ -40,10 +40,10 @@ The Fontend includes the Website.
 npm 7.2 or later and react-script
 
 ### Installing
-run `npm i` in the frontend folder.
+Run `npm i` in the frontend folder.
 
 ### Usage
-see frontend readme.
+See frontend readme.
 
 ## Esp32
 The Esp32 folder contains the code to be loaded onto the Esp32 cameras
