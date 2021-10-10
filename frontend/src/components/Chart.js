@@ -62,7 +62,7 @@ function Table(props) {
                 <div
                     style={{
                         width: '90%',
-                        height: '700px'
+                        height: '77%'
                     }}
                 >
                     <Chart data={data} axes={axes} series={series} />
