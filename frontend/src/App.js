@@ -8,11 +8,9 @@ import Live from "./components/Live"
 
 function App() {
   var roomNumber = 1
-  var roomName = "Scrum 1"
+  var roomName = "Digi Lab"
 
   var tab = "Live"
-
-
 
   var changeTab = (newTab) => {
     switch (newTab) {
@@ -36,8 +34,6 @@ function App() {
     }
   }
 
-
-
   var changeRoom = (number) => {
     roomNumber = number;
     if (roomNumber === 1) {
@@ -51,10 +47,10 @@ function App() {
       roomName = "Cabaret"
     }
     else if (roomNumber === 5) {
-      roomName = "Scrum Room 1"
+      roomName = "Scrum 1"
     }
     else if (roomNumber === 6) {
-      roomName = "Scrum Room 2"
+      roomName = "Scrum 2"
     }
     switchView(<></>);
 
@@ -110,8 +106,6 @@ function App() {
         <div className="room-tab">
           {viewTab}
         </div>
-
-
       </div>
       <div className="privacy">Privacy Policy</div>
 
