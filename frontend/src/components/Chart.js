@@ -24,8 +24,18 @@ function Table(props) {
         })//change to "area"
 
     var axes = [
-        { primary: true, type: 'time', position: 'bottom' },
-        { type: 'linear', position: 'left', stacked: true }
+        {
+            primary: true, type: 'time', position: 'bottom',
+            min: 1,
+            max: 20,
+            interval: 5
+        },
+        {
+            type: 'linear', position: 'left', stacked: true,
+            min: 1,
+            max: 20,
+            interval: 5
+        }
     ]
 
     const handleAlignment = async (event, scale) => {
@@ -86,10 +96,13 @@ function formatData(rawData) {
     for (let datum of rawData.entries) {
         data.push([datum.time * 1000, datum.count])
     }
+    data.push([new Date().getTime(), 2])
     data = data.sort((a, b) => a.time - b.time)
+    data[data.length - 1][1] *= 2
 
     return [{
-        label: 'series', data: data
+        label: 'series', data: data,
+        color: "rgb(144 205 202)"
     }]
 }
 

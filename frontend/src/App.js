@@ -8,11 +8,9 @@ import Live from "./components/Live"
 
 function App() {
   var roomNumber = 1
-  var roomName = "Scrum 1"
+  var roomName = "Digi Lab"
 
   var tab = "Live"
-
-
 
   var changeTab = (newTab) => {
     switch (newTab) {
@@ -36,16 +34,23 @@ function App() {
     }
   }
 
-
-
   var changeRoom = (number) => {
     roomNumber = number;
     if (roomNumber === 1) {
-      roomName = "Scrum 1"
+      roomName = "Digi Lab"
     } else if (roomNumber === 2) {
       roomName = "Studio 1"
     } else if (roomNumber === 3) {
+      roomName = "Studio 2"
+    }
+    else if (roomNumber === 4) {
       roomName = "Cabaret"
+    }
+    else if (roomNumber === 5) {
+      roomName = "Scrum 1"
+    }
+    else if (roomNumber === 6) {
+      roomName = "Scrum 2"
     }
     switchView(<></>);
 
@@ -57,9 +62,13 @@ function App() {
 
     switchRooms(
       <>
-        <div onClick={() => changeRoom(1)} className={number === 1 ? "active view-tab" : "no-active view-tab"}>Scrum</div>
-        <div onClick={() => changeRoom(2)} className={number === 2 ? "active view-tab" : "no-active view-tab"}>Studio</div>
-        <div onClick={() => changeRoom(3)} className={number === 3 ? "active view-tab" : "no-active view-tab"}>Cabaret</div>
+        <div onClick={() => changeRoom(1)} className={number === 1 ? "active view-tab" : "no-active view-tab"}>Digi Lab</div>
+        <div onClick={() => changeRoom(2)} className={number === 2 ? "active view-tab" : "no-active view-tab"}>Studio 1</div>
+        <div onClick={() => changeRoom(3)} className={number === 3 ? "active view-tab" : "no-active view-tab"}>Studio 2</div>
+        <div onClick={() => changeRoom(4)} className={number === 4 ? "active view-tab" : "no-active view-tab"}>Cabaret</div>
+        <div onClick={() => changeRoom(5)} className={number === 5 ? "active view-tab" : "no-active view-tab"}>Scrum 1</div>
+        <div onClick={() => changeRoom(6)} className={number === 6 ? "active view-tab" : "no-active view-tab"}>Scrum 2</div>
+
       </>)
   }
 
@@ -67,9 +76,12 @@ function App() {
 
   var [rooms, switchRooms] = useState(
     <>
-      <div onClick={() => changeRoom(1)} className="active view-tab">Scrum</div>
-      <div onClick={() => changeRoom(2)} className="no-active view-tab">Studio</div>
-      <div onClick={() => changeRoom(3)} className="no-active view-tab">Cabaret</div>
+      <div onClick={() => changeRoom(1)} className="active view-tab">Digi Lab</div>
+      <div onClick={() => changeRoom(2)} className="no-active view-tab">Studio 1</div>
+      <div onClick={() => changeRoom(3)} className="no-active view-tab">Studio 2</div>
+      <div onClick={() => changeRoom(4)} className="no-active view-tab">Cabaret</div>
+      <div onClick={() => changeRoom(5)} className="no-active view-tab">Scrum 1</div>
+      <div onClick={() => changeRoom(6)} className="no-active view-tab">Scrum 2</div>
     </>);
   var [viewElement, switchView] = useState(<Live roomNumber="1" roomName={roomName} />);
   var [viewTab, switchViewTab] = useState(
@@ -94,8 +106,6 @@ function App() {
         <div className="room-tab">
           {viewTab}
         </div>
-
-
       </div>
       <div className="privacy">Privacy Policy</div>
 

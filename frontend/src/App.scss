@@ -47,14 +47,18 @@ $quaternary: #9be9a1;
     left: 0;
 
     .view-tab {
-      width: 200px;
+      width: 150px;
       height: 41px;
-      border-radius: 30px 30px 0 0;
+      border-radius: 40px 40px 0 0;
       text-align: center;
       padding-top: 20px;
       font-size: 20px;
       cursor: pointer;
       transition: 0.2s ease;
+    }
+    .view-tab:hover {
+      height: 51px;
+      transform: translate(0, -10px);
     }
   }
 }
@@ -155,17 +159,17 @@ $quaternary: #9be9a1;
   position: relative;
   width: 100%;
   height: 100%;
+  display: flex;
+  place-items: center;
+  justify-content: space-around;
 
   .render {
-    position: absolute;
-    top: 50%;
-    right: 10%;
-    transform: translate(0, -50%);
-    width: 70%;
+    width: 50%;
     height: 60%;
 
     background-repeat: no-repeat;
     background-size: contain;
+    background-position: center;
   }
 
   .room1 {
@@ -176,11 +180,23 @@ $quaternary: #9be9a1;
     background-image: url("./assets/room2.png");
   }
 
+  .room3 {
+    background-image: url("./assets/room3.png");
+  }
+
+  .room4 {
+    background-image: url("./assets/room4.png");
+  }
+
+  .room5 {
+    background-image: url("./assets/room5.png");
+  }
+
+  .room6 {
+    background-image: url("./assets/room6.png");
+  }
+
   .live-count-container {
-    position: absolute;
-    bottom: 50%;
-    left: 100px;
-    transform: translate(0, 50%);
     text-align: center;
     display: flex;
     flex-direction: column;
@@ -225,8 +241,7 @@ $quaternary: #9be9a1;
 }
 
 .active:hover {
-  background-color: #7ec5ba;
-  color: white;
+  background-color: #fff6;
 }
 
 .privacy {

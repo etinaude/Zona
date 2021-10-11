@@ -8,9 +8,6 @@ import React, { useState } from 'react';
 function Live(props) {
     return (
         <div className="Live">
-            <div className={"render room" + props.roomNumber}>
-
-            </div>
             <div className="live-count-container">
                 <div className="name">
                     {props.roomName}
@@ -20,6 +17,7 @@ function Live(props) {
                     <div className="live-count-text">people in the room</div>
                 </div>
             </div>
+            <div className={"render room" + props.roomNumber}></div>
 
         </div >
     );
